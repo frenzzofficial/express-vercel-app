@@ -1,13 +1,15 @@
 import { v4 as uuidv4 } from "uuid";
 import type { Request, Response, NextFunction } from "express";
 
-// By using declaration merging, we can extend the Express Request interface
-// to include our custom 'requestId' property. This makes it available
-// to other middlewares and request handlers in a type-safe way.
+// By using declaration merging on the Response object, we can provide
+// type-safety for res.locals. This is a more stable pattern than
+// modifying the Request object directly, especially in serverless environments.
 declare global {
   namespace Express {
-    export interface Request {
-      requestId: string;
+    export interface Response {
+      locals: {
+        requestId: string;
+      };
     }
   }
 }
@@ -15,8 +17,11 @@ declare global {
 /**
  * Express middleware to assign a unique ID to each incoming request.
  * It checks for an existing 'x-request-id' header. If not found, a new
- * UUID is generated. The ID is attached to both the response header
- * and the request object for downstream use.
+ * UUID is generated. The ID is attached to the response header and
+ * stored in `res.locals` for downstream use.
+ *
+ * Using `res.locals` is the recommended, standard way to pass request-scoped
+ * data in Express and is more reliable in serverless environments like Vercel.
  *
  * @param req - The Express request object.
  * @param res - The Express response object.
@@ -33,11 +38,13 @@ const requestIdMiddleware = (req: Request, res: Response, next: NextFunction): v
   // Set the request ID on the response header for client-side tracking.
   res.setHeader("X-Request-ID", requestId);
 
-  // Attach the request ID to the Express request object.
-  // This is now type-safe thanks to the declaration merging above.
-  req.requestId = requestId;
+  // Attach the request ID to res.locals instead of the request object.
+  // This is the idiomatic Express pattern and avoids potential issues with
+  // modifying the request object in certain environments.
+  res.locals.requestId = requestId;
 
   next();
 };
 
 export default requestIdMiddleware;
+
