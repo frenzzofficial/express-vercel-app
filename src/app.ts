@@ -48,7 +48,7 @@ const createApp = async (): Promise<express.Express> => {
     res.type("html").sendFile(path.join(viewsPath, "index.html"));
   });
 
-  // app.use("/api/test", supabaseTestRoutes);
+  app.use("/api/test", supabaseTestRoutes);
 
   // 🩺 Health check
   app.get("/api/health", (_req: Request, res: Response) => {
