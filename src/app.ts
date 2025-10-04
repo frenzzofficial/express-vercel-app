@@ -18,8 +18,8 @@ const createApp = async (): Promise<express.Express> => {
   const app = express();
 
   // 🔐 Security headers
-  app.use(helmetMiddleware);
-  app.use(requestIdMiddleware);
+  // app.use(helmetMiddleware);
+  // app.use(requestIdMiddleware);
 
   // 🧊 Compression for faster responses
   app.use(compression());
@@ -32,9 +32,9 @@ const createApp = async (): Promise<express.Express> => {
   app.use(express.json({ limit: "10mb" }));
   app.use(express.urlencoded({ extended: true }));
 
-  if (process.env.NODE_ENV === "development") {
-    app.use(httpLogger);
-  }
+  // if (process.env.NODE_ENV === "development") {
+  //   app.use(httpLogger);
+  // }
 
   // 🚦 Rate limiter BEFORE routes
   app.use(generalLimiter);
@@ -48,7 +48,7 @@ const createApp = async (): Promise<express.Express> => {
     res.type("html").sendFile(path.join(viewsPath, "index.html"));
   });
 
-  app.use("/api/test", supabaseTestRoutes);
+  // app.use("/api/test", supabaseTestRoutes);
 
   // 🩺 Health check
   app.get("/api/health", (_req: Request, res: Response) => {
