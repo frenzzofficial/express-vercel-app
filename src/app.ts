@@ -8,7 +8,6 @@ import helmetMiddleware from "./libs/middlewares/helmet";
 import { corsMiddleware } from "./libs/middlewares/cors";
 // import { httpLogger } from "./libs/middlewares/httpLogger";
 import { generalLimiter } from "./libs/middlewares/rateLimit";
-import requestIdMiddleware from "./libs/middlewares/requestId";
 import { errorHandler, NotFoundHandler } from "./libs/utils/NotFoundHandler";
 
 // Routes
@@ -19,7 +18,6 @@ const createApp = async (): Promise<express.Express> => {
 
   // 🔐 Security headers
   app.use(helmetMiddleware);
-  app.use(requestIdMiddleware);
 
   // 🧊 Compression for faster responses
   app.use(compression());
