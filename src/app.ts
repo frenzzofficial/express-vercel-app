@@ -18,7 +18,7 @@ const createApp = async (): Promise<express.Express> => {
   const app = express();
 
   // 🔐 Security headers
-  // app.use(helmetMiddleware);
+  app.use(helmetMiddleware);
   // app.use(requestIdMiddleware);
 
   // 🧊 Compression for faster responses
