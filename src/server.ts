@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import createApp from "./app";
-import { envAppConfig } from "./libs/env/env.app";
+import { envAppConfig } from "./packages/env/env.app";
 
 // ✅ Load environment variables early
 dotenv.config();

@@ -4,11 +4,11 @@ import express, { Request, Response } from "express";
 // Middlewares
 import compression from "compression";
 import cookieParser from "cookie-parser";
-import helmetMiddleware from "./libs/middlewares/helmet";
-import { corsMiddleware } from "./libs/middlewares/cors";
-// import { httpLogger } from "./libs/middlewares/httpLogger";
-import { generalLimiter } from "./libs/middlewares/rateLimit";
-import { errorHandler, NotFoundHandler } from "./libs/utils/NotFoundHandler";
+import helmetMiddleware from "./packages/middlewares/helmet";
+import { corsMiddleware } from "./packages/middlewares/cors";
+// import { httpLogger } from "./packages/middlewares/httpLogger";
+import { generalLimiter } from "./packages/middlewares/rateLimit";
+import { errorHandler, NotFoundHandler } from "./packages/utils/NotFoundHandler";
 
 // Routes
 import supabaseTestRoutes from "./api/test/test.supabase";

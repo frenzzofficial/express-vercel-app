@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { allowedMailDomains } from "../../libs/configs/config.domain";
+import { allowedMailDomains } from "../../packages/configs/config.domain";
 
 // 🧩 Shared schema messages
 export const schemaMessages = {

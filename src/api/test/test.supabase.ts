@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { supabase } from "../../libs/db/db.supabase";
+import { supabase } from "../../packages/db/db.supabase";
 
 const supabaseTestRoutes = Router();
 
@@ -43,10 +43,7 @@ supabaseTestRoutes.post("/supabase-test", async (req: Request, res: Response) =>
   }
 
   try {
-    const { data, error } = await supabase
-      .from("test")
-      .insert([{ email, username }])
-      .select(); // Ensures inserted data is returned
+    const { data, error } = await supabase.from("test").insert([{ email, username }]).select(); // Ensures inserted data is returned
 
     if (error) {
       console.error("Supabase POST error:", error.message);
