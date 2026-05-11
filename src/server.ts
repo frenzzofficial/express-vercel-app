@@ -18,9 +18,11 @@ const startServer = async (): Promise<void> => {
   try {
     const app = await createApp();
     // ✅ Enable trust proxy for production
-    if (process.env.NODE_ENV === "production") {
-      app.set("trust proxy", 1); // if behind proxy like Nginx or Heroku
-    }
+    // if behind proxy like Nginx or Heroku
+    // disable it for deploying on localhost/vercel to avoid issues with IP detection
+    // if (process.env.NODE_ENV === "production") {
+    //   app.set("trust proxy", 1); 
+    // }
 
     const server = app.listen(APP_PORT, () => {
       console.log(`🚀 Server running on port http://localhost:${APP_PORT}`);
