@@ -1,7 +1,8 @@
 import type { Request, Response } from "express";
 // import { generateAccessToken, generateRefreshToken } from "../../packages/utils/utils.token";
-import { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from "../../packages/configs/config.better-auth";
-import { accessTokenCookieOptions, refreshTokenCookieOptions } from "../../packages/utils/utils.auth";
+// import { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from "../../packages/configs/config.better-auth";
+// import { accessTokenCookieOptions, refreshTokenCookieOptions } from "../../packages/utils/utils.auth";
+import { registerUser } from "./auth.services";
 
 
 export async function signup(req: Request, res: Response) {
@@ -15,13 +16,8 @@ export async function signup(req: Request, res: Response) {
       });
     }
 
-    // const user = await registerUser(email, password, name);
+    const user = await registerUser(email, password, name);
 
-    const user = {
-      id: "user-001", // Simple ID generation for demo purposes
-      email: email,
-      name: name,
-    }
 
     // const accessToken = generateAccessToken(user.id);
 
