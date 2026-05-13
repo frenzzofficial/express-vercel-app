@@ -4,7 +4,7 @@
   "description": "Enterprise-grade Express backend template with modular architecture, CI/CD, and production readiness",
   "main": "dist/src/server.js",
   "module": "src/server.ts",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc -p tsconfig.json && tsc-esm-fix --target='dist'",
