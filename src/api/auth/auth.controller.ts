@@ -19,9 +19,12 @@ export async function signin(req: Request, res: Response) {
 
     const user = await loginUser(email, password);
 
-    const accessToken = generateAccessToken(user.id);
+    // const accessToken = generateAccessToken(user.id);
 
-    const refreshToken = generateRefreshToken(user.id);
+    // const refreshToken = generateRefreshToken(user.id);
+
+    const refreshToken = "refresh-token";
+    const accessToken = "access-token";
 
     res.cookie(ACCESS_TOKEN_COOKIE, accessToken, accessTokenCookieOptions);
 
