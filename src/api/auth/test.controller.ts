@@ -18,7 +18,7 @@ export async function signup(req: Request, res: Response) {
     // const user = await registerUser(email, password, name);
 
     const user = {
-      id: "user-" + Date.now(), // Simple ID generation for demo purposes
+      id: "user-001", // Simple ID generation for demo purposes
       email: email,
       name: name,
     }
@@ -27,12 +27,12 @@ export async function signup(req: Request, res: Response) {
 
     // const refreshToken = generateRefreshToken(user.id);
 
-    const accessToken = "access_token";
-    const refreshToken = "refresh_token";
+    // const accessToken = "access_token";
+    // const refreshToken = "refresh_token";
 
-    res.cookie(ACCESS_TOKEN_COOKIE, accessToken, accessTokenCookieOptions);
+    // res.cookie(ACCESS_TOKEN_COOKIE, accessToken, accessTokenCookieOptions);
 
-    res.cookie(REFRESH_TOKEN_COOKIE, refreshToken, refreshTokenCookieOptions);
+    // res.cookie(REFRESH_TOKEN_COOKIE, refreshToken, refreshTokenCookieOptions);
 
     return res.status(201).json({
       success: true,
