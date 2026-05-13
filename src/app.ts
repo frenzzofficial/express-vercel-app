@@ -11,6 +11,7 @@ import { generalLimiter } from "./packages/middlewares/rateLimit";
 import { errorHandler, NotFoundHandler } from "./packages/utils/NotFoundHandler";
 
 // Routes
+import authRoutes from "./api/auth/auth.routes";
 import supabaseTestRoutes from "./api/test/test.supabase";
 
 const createApp = async (): Promise<express.Express> => {
@@ -57,6 +58,9 @@ const createApp = async (): Promise<express.Express> => {
       environment: process.env.NODE_ENV,
     });
   });
+
+  // Auth routes will go here in the future
+  app.use("/api/auth", authRoutes);
 
   // 🧹 Catch-all 404 and error handler
   app.use(NotFoundHandler);
