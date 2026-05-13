@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import {  signup } from "./auth.controller";
+// import {  signup } from "./auth.controller";
 
 const authRoutes = Router();
 
@@ -12,7 +12,7 @@ authRoutes.get("/test", (_req, res) => {
   });
 });
 
-authRoutes.post("/signup", signup);
+// authRoutes.post("/signup", signup);
 
 // authRoutes.post("/signin", signin);
 
