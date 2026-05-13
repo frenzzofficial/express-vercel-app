@@ -4,7 +4,7 @@ import { loginUser, registerUser } from "./auth.services";
 import {
   accessTokenCookieOptions,
   refreshTokenCookieOptions,
-} from "../../packages/utils/utils.auth";
+} from "../../packages/middlewares/cookies";
 
 import { generateAccessToken, generateRefreshToken } from "../../packages/utils/utils.token";
 import {

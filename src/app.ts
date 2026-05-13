@@ -17,6 +17,8 @@ import supabaseTestRoutes from "./api/test/test.supabase";
 const createApp = async (): Promise<express.Express> => {
   const app = express();
 
+  app.set("trust proxy", 1);
+
   // 🔐 Security headers
   app.use(helmetMiddleware);
 
