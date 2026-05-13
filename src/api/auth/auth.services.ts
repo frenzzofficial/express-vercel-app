@@ -1,5 +1,4 @@
 import bcrypt from "bcryptjs";
-import { randomUUID } from "node:crypto";
 import { dummyUsers } from "../../packages/constants/dummyUser";
 
 export async function registerUser(email: string, password: string, name: string) {
@@ -12,7 +11,7 @@ export async function registerUser(email: string, password: string, name: string
   const hashedPassword = await bcrypt.hash(password, 12);
 
   const user = {
-    id: randomUUID(),
+    id: "user-" + Date.now(), // Simple ID generation for demo purposes
     email,
     password: hashedPassword,
     name,
