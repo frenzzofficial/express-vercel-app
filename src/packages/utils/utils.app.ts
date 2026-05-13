@@ -9,5 +9,5 @@ export const getCookieExpiryInDays = (days: number): number => {
  * Returns cookie expiration time in milliseconds for given number of minutes.
  */
 export const getCookieExpiryInMinutes = (minutes: number): number => {
-  return minutes * 60 * 1000; // seconds
+  return minutes * 60 * 1000;
 };

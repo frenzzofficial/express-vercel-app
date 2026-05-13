@@ -22,9 +22,9 @@ export async function signup(req: Request, res: Response) {
 
     const refreshToken = generateRefreshToken(user.id);
 
-    // res.cookie(ACCESS_TOKEN_COOKIE, accessToken, accessTokenCookieOptions);
+    res.cookie(ACCESS_TOKEN_COOKIE, accessToken, accessTokenCookieOptions);
 
-    // res.cookie(REFRESH_TOKEN_COOKIE, refreshToken, refreshTokenCookieOptions);
+    res.cookie(REFRESH_TOKEN_COOKIE, refreshToken, refreshTokenCookieOptions);
 
     return res.status(201).json({
       success: true,

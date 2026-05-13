@@ -11,7 +11,7 @@ const baseCookieConfig: CookieOptions = {
   secure: isProduction,
 
   sameSite: isProduction
-    ? "none"
+    ? "lax"
     : "lax",
 
   path: "/",
