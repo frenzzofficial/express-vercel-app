@@ -21,7 +21,7 @@ const startServer = async (): Promise<void> => {
     // if behind proxy like Nginx or Heroku
     // disable it for deploying on localhost/vercel to avoid issues with IP detection
     // if (process.env.NODE_ENV === "production") {
-    //   app.set("trust proxy", 1); 
+    //   app.set("trust proxy", 1);
     // }
 
     const server = app.listen(APP_PORT, () => {
