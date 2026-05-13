@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc -p tsconfig.json && tsc-esm-fix --target='dist' --ext=.js",
+    "build": "tsc -p tsconfig.json && tsc-esm-fix --target='dist'",
     "clean": "rimraf dist",
     "start": "node dist/src/server.js",
     "start:local": "node dist/src/server.js",
