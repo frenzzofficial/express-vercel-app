@@ -60,7 +60,7 @@ const createApp = async (): Promise<express.Express> => {
   });
 
   // Auth routes will go here in the future
-  app.use("/api/auth", authRoutes);
+  // app.use("/api/auth", authRoutes);
 
   // 🧹 Catch-all 404 and error handler
   app.use(NotFoundHandler);
