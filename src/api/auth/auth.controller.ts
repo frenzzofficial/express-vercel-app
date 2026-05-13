@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
-import { loginUser, registerUser } from "./auth.services";
+import { loginUser } from "./auth.services";
+// import { registerUser } from "./auth.services";
 
 import {
   accessTokenCookieOptions,
@@ -44,7 +45,20 @@ export async function signup(req: Request, res: Response) {
   try {
     const { email, password, name } = req.body;
 
-    const user = await registerUser(email, password, name);
+    if( !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing Password",  
+      });
+    }
+
+    // const user = await registerUser(email, password, name);
+
+    const user = {
+      id: "user-" + Date.now(), // Simple ID generation for demo purposes
+      email: email,
+      name: name,
+    }
 
     const accessToken = generateAccessToken(user.id);
 
