@@ -1,7 +1,8 @@
 import type { Request, Response } from "express";
 import { loginUser, registerUser } from "./auth.services";
-import { validateSignupCredentials } from "./auth.validate";
 import { SignupRequestBody, SignupResponse } from "../../types/auth";
+import { validateSchema } from "../../packages/utils/ValidateSchema";
+import { signinSchema, signupSchema } from "../../packages/schemas/schema.auth";
 
 import {
   accessTokenCookieOptions,
@@ -14,7 +15,6 @@ import {
   REFRESH_TOKEN_COOKIE,
 } from "../../packages/configs/config.better-auth";
 
-
 /* -------------------------------------------------------------------------- */
 /*                              SIGNUP CONTROLLER                             */
 /* -------------------------------------------------------------------------- */
@@ -25,31 +25,23 @@ export async function signup(
   res: Response<SignupResponse>
 ): Promise<Response<SignupResponse>> {
   try {
-    // const { email, password, name } = req.body;
-
-    // const validateSignupCredentialsRes = validateSignupCredentials({email, password, name}); 
-
-    // if (!validateSignupCredentialsRes.success) {
-    //   return res.status(400).json(validateSignupCredentialsRes);
-    // }
-
-    const validation = validateSignupCredentials(req.body);
+    const validation = validateSchema(signupSchema, req.body);
 
     if (!validation.success) {
       return res.status(400).json({
-      success: false,
-      // field: validation.field,
-      message: validation.message,
+        success: false,
+        // field: validation.field,
+        message: validation.message,
       });
     }
 
-    const { email, password, name } =validation.data;
+    const { email, password, fullname } = validation.data;
 
     /* ---------------------------------------------------------------------- */
     /*                               REGISTER USER                            */
     /* ---------------------------------------------------------------------- */
 
-    const user = await registerUser(email, password, name ?? "Anonymous User");
+    const user = await registerUser(email, password, fullname ?? "Anonymous User");
 
     /* ---------------------------------------------------------------------- */
     /*                                TOKENS                                  */
@@ -80,7 +72,7 @@ export async function signup(
         user: {
           id: user.id,
           email: user.email,
-          name: user.name,
+          fullname: user.fullname,
         },
       },
     });
@@ -97,28 +89,60 @@ export async function signup(
 
 export async function signin(req: Request, res: Response) {
   try {
-    const { email, password } = req.body;
+    const validation = validateSchema(signinSchema, req.body);
+
+    if (!validation.success) {
+      return res.status(400).json({
+        success: false,
+        // field: validation.field,
+        message: validation.message,
+      });
+    }
+
+    const { email, password } = validation.data;
+
+    /* ---------------------------------------------------------------------- */
+    /*                               LOGIN USER                            */
+    /* ---------------------------------------------------------------------- */
 
     const user = await loginUser(email, password);
+
+    /* ---------------------------------------------------------------------- */
+    /*                                TOKENS                                  */
+    /* ---------------------------------------------------------------------- */
 
     const accessToken = generateAccessToken(user.id);
 
     const refreshToken = generateRefreshToken(user.id);
 
+    /* ---------------------------------------------------------------------- */
+    /*                                COOKIES                                 */
+    /* ---------------------------------------------------------------------- */
+
     res.cookie(ACCESS_TOKEN_COOKIE, accessToken, accessTokenCookieOptions);
 
     res.cookie(REFRESH_TOKEN_COOKIE, refreshToken, refreshTokenCookieOptions);
 
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
 
-      user,
+      message: "User loggedin successfully",
+
+      data: {
+        user: {
+          id: user.id,
+          email: user.email,
+          fullname: user.fullname,
+        },
+      },
     });
   } catch (error) {
-    return res.status(401).json({
+    console.error("[AUTH_SIGNIN_ERROR]", error);
+
+    return res.status(500).json({
       success: false,
 
-      message: error instanceof Error ? error.message : "Unknown error",
+      message: error instanceof Error ? error.message : "Internal server error",
     });
   }
 }

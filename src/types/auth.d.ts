@@ -1,13 +1,14 @@
 export interface SignupRequestBody {
   email?: string;
   password?: string;
-  name?: string;
+  fullname?: string;
+  terms?: boolean;
 }
 
 export interface AuthUserResponse {
   id: string;
   email: string;
-  name: string;
+  fullname: string;
 }
 
 export interface SuccessResponse {

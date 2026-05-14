@@ -1,37 +1,65 @@
 import { z } from "zod";
+import {
+  emailRules,
+  passwordRules,
+  fullnameRules,
+  termsAcceptedRules,
+} from "../configs/config.schema";
 
 /* -------------------------------------------------------------------------- */
-/*                               SIGNUP SCHEMA                                */
+/*                               SCHEMA                                       */
 /* -------------------------------------------------------------------------- */
 
-export const signupSchema = z.object({
-  email: z
-    .string({
-      error: "Email is required",
-    })
-    .trim()
-    .toLowerCase()
-    .email("Invalid email address"),
+export const signupSchema = z
+  .object({
+    fullname: fullnameRules.optional(),
+    email: emailRules,
+    password: passwordRules,
+    confirmPassword: passwordRules,
+    terms: termsAcceptedRules.optional(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "password do not match",
+    path: ["confirmPassword"],
+  })
+  .describe("Registration form");
 
-  password: z
-    .string({
-      error: "Password is required",
-    })
-    .trim()
-    .min(6, "Password must be at least 6 characters")
-    .max(128, "Password must not exceed 128 characters"),
+export const signinSchema = z.object({
+  email: emailRules,
+  password: passwordRules,
+  remember: z.boolean().optional(),
+});
 
-  name: z
-    .string({
-      error: "Name is required",
-    })
-    .trim()
-    .min(2, "Name is too short")
-    .max(50, "Name is too long"),
+export const forgetPasswordSchema = z.object({
+  email: emailRules,
+});
+
+export const resetPasswordSchema = z.object({
+  token: z.string().min(1, "Token is required"),
+  password: passwordRules,
+  confirmPassword: passwordRules,
+});
+
+export const updatePasswordSchema = z.object({
+  password: passwordRules,
+  confirmPassword: passwordRules,
+});
+
+export const updateProfileSchema = z.object({
+  fullname: fullnameRules,
+  email: emailRules,
+});
+
+export const contactSchema = z.object({
+  fullname: fullnameRules,
+  email: emailRules,
+  topic: z.string().trim().min(5, "Topic is required"),
+  message: z.string().trim().min(5, "Message is required"),
+  newsletter: z.boolean().optional(),
 });
 
 /* -------------------------------------------------------------------------- */
-/*                                   TYPES                                    */
+/*                               SCHEMA OUTPUT                                */
 /* -------------------------------------------------------------------------- */
 
 export type SignupSchemaInput = z.infer<typeof signupSchema>;

@@ -1,8 +1,8 @@
 import bcrypt from "bcryptjs";
-import { dummyUsers } from "../../packages/constants/dummyUser";
+import { UsersList } from "../../packages/constants/defaultUser";
 
-export async function registerUser(email: string, password: string, name: string) {
-  const existingUser = dummyUsers.find((u) => u.email === email);
+export async function registerUser(email: string, password: string, fullname: string) {
+  const existingUser = UsersList.find((u) => u.email === email);
 
   if (existingUser) {
     throw new Error("User already exists");
@@ -14,20 +14,20 @@ export async function registerUser(email: string, password: string, name: string
     id: "user-" + Date.now(), // Simple ID generation for demo purposes
     email,
     password: hashedPassword,
-    name,
+    fullname,
   };
 
-  dummyUsers.push(user);
+  UsersList.push(user);
 
   return {
     id: user.id,
     email: user.email,
-    name: user.name,
+    fullname: user.fullname,
   };
 }
 
 export async function loginUser(email: string, password: string) {
-  const user = dummyUsers.find((u) => u.email === email);
+  const user = UsersList.find((u) => u.email === email);
 
   if (!user) {
     throw new Error("Invalid credentials");
@@ -36,12 +36,12 @@ export async function loginUser(email: string, password: string) {
   const validPassword = await bcrypt.compare(password, user.password);
 
   if (!validPassword) {
-    throw new Error("Invalid credentials");
+    throw new Error("Invalid password");
   }
 
   return {
     id: user.id,
     email: user.email,
-    name: user.name,
+    fullname: user.fullname,
   };
 }
