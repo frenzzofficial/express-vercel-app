@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import { UsersList } from "../../packages/constants/defaultUser";
+import { UsersList } from "../../packages/utils/defaultUser";
 
 export async function registerUser(email: string, password: string, fullname: string) {
   const existingUser = UsersList.find((u) => u.email === email);

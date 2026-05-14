@@ -10,10 +10,7 @@ import {
 } from "../../packages/middlewares/cookies";
 
 import { generateAccessToken, generateRefreshToken } from "../../packages/utils/utils.token";
-import {
-  ACCESS_TOKEN_COOKIE,
-  REFRESH_TOKEN_COOKIE,
-} from "../../packages/configs/config.better-auth";
+import { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from "../../packages/utils/utils.constant";
 
 /* -------------------------------------------------------------------------- */
 /*                              SIGNUP CONTROLLER                             */

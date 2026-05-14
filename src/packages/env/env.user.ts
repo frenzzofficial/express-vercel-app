@@ -6,8 +6,8 @@ dotenv.config();
 const envConfigSchema = z.object({
   DEFAULT_USER_ID: z.string().default("default-user-1"),
   DEFAULT_USER_FULLNAME: z.string().default("John Doe"),
-  DEFAULT_USER_EMAIL: z.string().default("johndoe@gmail.com"),
-  DEFAULT_USER_PASSWORD: z.string().default("password#1234"),
+  DEFAULT_USER_EMAIL: z.string().default("johndoe@email.com"),
+  DEFAULT_USER_PASSWORD: z.string().default("johndoe#1234"),
 });
 
 // ✅ Validate process.env

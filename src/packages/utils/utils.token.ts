@@ -5,7 +5,7 @@ import {
   ACCESS_TOKEN_PREFIX,
   REFRESH_TOKEN_LENGTH,
   REFRESH_TOKEN_PREFIX,
-} from "../configs/config.better-auth";
+} from "./utils.constant";
 
 export function generateAccessToken(userId: string) {
   return `${ACCESS_TOKEN_PREFIX}_${userId}_${nanoid(ACCESS_TOKEN_LENGTH)}`;
